@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Hello, world!</title>
+</head>
+<style>
+    * {
+        text-transform: capitalize;
+    }
+    
+    .wrapper {
+        width: 200px;
+        padding: 20px;
+        height: 150px;
+    }
+</style>
+
+<body>
+    <section>
+        <div class="container">
+            <h1> show covid-19 details for countries using fetched API</h1>
+            <div class="wrapper">
+                <select name="" id="select_country" class="form-control" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();'>
+                <option>Select Country</option>
+                <option value=76>india</option>
+                <option value=0>Afghanistan</option>
+                <option value=13>Bangladesh"</option>
+                <option value=35>China</option>
+                <option value=8>Australia</option>
+                <option value=79>Iraq</option>
+                <option value=84>Japan</option>
+                <option value=82>Italy</option>
+                <option value=81>Israel</option>
+                <option value=80>Ireland</option>
+            </select></div>
+            <div class="row">
+                <div class="col">
+                    <label for="country">country</label>
+                    <input type="text" class="form-control" id="countryName" placeholder="First name" aria-label="First name">
+                </div>
+                <div class="col">
+                    <label for="CountryCode">Country Code</label>
+                    <input type="text" class="form-control" id="CountryCode" placeholder="Last name" aria-label="Last name">
+                </div>
+                <div class="col">
+                    <label for="country">Date</label>
+                    <input type="text" class="form-control" id="Date" placeholder="First name" aria-label="First name">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="CountryCode">New Confirmed Cases</label>
+                    <input type="text" class="form-control" id="NewConfirmed" placeholder="Last name" aria-label="Last name">
+                </div>
+                <div class="col">
+                    <label for="CountryCode">New Deaths</label>
+                    <input type="text" class="form-control" id="NewDeaths" placeholder="Last name" aria-label="Last name">
+                </div>
+                <div class="col">
+                    <label for="country">New Recovered</label>
+                    <input type="text" class="form-control" id="NewRecovered" placeholder="First name" aria-label="First name">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="CountryCode">Total Confirmed</label>
+                    <input type="text" class="form-control" id="TotalConfirmed" placeholder="Last name" aria-label="Last name">
+                </div>
+                <div class="col">
+                    <label for="CountryCode">Total Deaths</label>
+                    <input type="text" class="form-control" id="TotalDeaths" placeholder="Last name" aria-label="Last name">
+                </div>
+                <div class="col">
+                    <label for="CountryCode">Total Recovered</label>
+                    <input type="text" class="form-control" id="TotalRecovered" placeholder="Last name" aria-label="Last name">
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
+
+
+<script>
+    fetch('https://api.covid19api.com/summary').then((Api_data) => {
+        // console.log(Api_data.json())
+        return Api_data.json()
+    }).then(async(actual_data) => {
+        console.log(actual_data.Countries)
+
+        // document.getElementById('countryName').value = actual_data.Countries[i].Country;
+        // document.getElementById('CountryCode').value = actual_data.Countries[i].CountryCode;
+        // document.getElementById('Date').value = new Date(actual_data.Countries[i].Date).toLocaleDateString();
+        // document.getElementById('NewConfirmed').value = actual_data.Countries[i].NewConfirmed;
+        // document.getElementById('NewDeaths').value = actual_data.Countries[i].NewDeaths;
+        // document.getElementById('NewRecovered').value = actual_data.Countries[i].NewRecovered;
+        // document.getElementById('TotalConfirmed').value = actual_data.Countries[i].TotalConfirmed;
+        // document.getElementById('TotalDeaths').value = actual_data.Countries[i].TotalDeaths;
+        // document.getElementById('TotalRecovered').value = actual_data.Countries[i].TotalRecovered;
+
+
+
+        function displayVals() {
+
+            document.getElementById('countryName').value = actual_data.Countries[$("#select_country").val()].Country;
+            document.getElementById('CountryCode').value = actual_data.Countries[$("#select_country").val()].CountryCode;
+            document.getElementById('Date').value = new Date(actual_data.Countries[$("#select_country").val()].Date).toLocaleDateString();
+            document.getElementById('NewConfirmed').value = actual_data.Countries[$("#select_country").val()].NewConfirmed;
+            document.getElementById('NewDeaths').value = actual_data.Countries[$("#select_country").val()].NewDeaths;
+            document.getElementById('NewRecovered').value = actual_data.Countries[$("#select_country").val()].NewRecovered;
+            document.getElementById('TotalConfirmed').value = actual_data.Countries[$("#select_country").val()].TotalConfirmed;
+            document.getElementById('TotalDeaths').value = actual_data.Countries[$("#select_country").val()].TotalDeaths;
+            document.getElementById('TotalRecovered').value = actual_data.Countries[$("#select_country").val()].TotalRecovered;
+
+        }
+
+        $("select").change(displayVals);
+
+
+
+
+    }).catch((error) => {
+        console.log(`Error ${error}`)
+    })
+</script>

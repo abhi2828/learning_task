@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Hello, world!</title>
+</head>
+<style>
+    * {
+        text-transform: capitalize;
+    }
+    
+    .wrapper {
+        width: 300px;
+        padding: 20px;
+        height: 150px;
+    }
+    
+    h1 {
+        text-align: center;
+    }
+</style>
+
+<body>
+    <section>
+        <div class="container">
+            <h1>Check for covid status Globally </h1>
+
+
+            <div class="wrapper">
+                <select name="" id="select_country" class="form-control" style="height: 50px !important;">
+                    <option>Select Country</option>
+                    <!-- dynamic options -->
+                </select>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="country">country</label>
+                    <input type="text" class="form-control" id="countryName" placeholder="First name" aria-label="First name">
+                </div>
+                <div class="col">
+                    <label for="CountryCode">Country Code</label>
+                    <input type="text" class="form-control" id="CountryCode" placeholder="Last name" aria-label="Last name">
+                </div>
+                <div class="col">
+                    <label for="country">Date</label>
+                    <input type="text" class="form-control" id="Date" placeholder="First name" aria-label="First name">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="CountryCode">New Confirmed Cases</label>
+                    <input type="text" class="form-control" id="NewConfirmed" placeholder="Last name" aria-label="Last name">
+                </div>
+                <div class="col">
+                    <label for="CountryCode">New Deaths</label>
+                    <input type="text" class="form-control" id="NewDeaths" placeholder="Last name" aria-label="Last name">
+                </div>
+                <div class="col">
+                    <label for="country">New Recovered</label>
+                    <input type="text" class="form-control" id="NewRecovered" placeholder="First name" aria-label="First name">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="CountryCode">Total Confirmed</label>
+                    <input type="text" class="form-control" id="TotalConfirmed" placeholder="Last name" aria-label="Last name">
+                </div>
+                <div class="col">
+                    <label for="CountryCode">Total Deaths</label>
+                    <input type="text" class="form-control" id="TotalDeaths" placeholder="Last name" aria-label="Last name">
+                </div>
+                <div class="col">
+                    <label for="CountryCode">Total Recovered</label>
+                    <input type="text" class="form-control" id="TotalRecovered" placeholder="Last name" aria-label="Last name">
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- to use selectbox with search option use below links and $('#select_country').select2(); this code in the end of ur code -->
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+</body>
+
+</html>
+
+
+<script>
+    fetch('https://api.covid19api.com/summary').then((Api_data) => {
+        // console.log(Api_data.json())
+        return Api_data.json()
+    }).then(async(actual_data) => {
+        console.log(actual_data.Countries)
+
+
+
+        var optionsAsString = "";
+        for (var i = 0; i < actual_data.Countries.length; i++) {
+            optionsAsString += "<option value='" + i + "'>" + actual_data.Countries[i].Country + "</option>";
+        }
+        $('#select_country').append(optionsAsString);
+        $('#select_country').select2();
+
+        i2 = await $('#select_country').on('change', function() {
+            let i3 = this.value;
+            // alert(i3)
+            console.log(i)
+            document.getElementById('countryName').value = actual_data.Countries[i3].Country;
+            document.getElementById('CountryCode').value = actual_data.Countries[i3].CountryCode;
+            document.getElementById('Date').value = new Date(actual_data.Countries[i3].Date).toLocaleDateString();
+            document.getElementById('NewConfirmed').value = actual_data.Countries[i3].NewConfirmed;
+            document.getElementById('NewDeaths').value = actual_data.Countries[i3].NewDeaths;
+            document.getElementById('NewRecovered').value = actual_data.Countries[i3].NewRecovered;
+            document.getElementById('TotalConfirmed').value = actual_data.Countries[i3].TotalConfirmed;
+            document.getElementById('TotalDeaths').value = actual_data.Countries[i3].TotalDeaths;
+            document.getElementById('TotalRecovered').value = actual_data.Countries[i3].TotalRecovered;
+        });
+
+    }).catch((error) => {
+        console.log(`Error ${error}`)
+    })
+</script>
